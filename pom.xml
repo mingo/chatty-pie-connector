@@ -52,7 +52,7 @@
 		<dependency>
 			<groupId>com.appdirect</groupId>
 			<artifactId>service-integration-sdk</artifactId>
-			<version>1.42</version>
+			<version>1.46</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

@@ -37,3 +37,14 @@ info:
 management:
   security:
     enabled: false
+
+openid:
+  identityUrl: https://marketplace.appdirect.com/openid/id
+
+authentication:
+  roles:
+    admin:
+      - CHANNEL_ADMIN
+      - DEVELOPER
+    user:
+      - USER

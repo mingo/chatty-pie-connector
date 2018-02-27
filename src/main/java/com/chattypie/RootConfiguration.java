@@ -13,9 +13,21 @@
 
 package com.chattypie;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import ch.qos.logback.access.tomcat.LogbackValve;
+import com.appdirect.sdk.ConnectorSdkConfiguration;
+import com.appdirect.sdk.appmarket.DeveloperSpecificAppmarketCredentialsSupplier;
+import com.appdirect.sdk.credentials.StringBackedCredentialsSupplier;
+import com.appdirect.sdk.notification.HtmlEmailNotificationService;
+import com.appdirect.sdk.security.openid.configuration.OpenIdSsoConfiguration;
+import com.chattypie.config.SecurityConfiguration;
+import com.chattypie.domain.ownership.verification.DomainOwnershipVerificationConfiguration;
+import com.chattypie.handler.EventHandlersConfiguration;
+import com.chattypie.service.appmarket.CompanyAccountServiceConfiguration;
+import com.chattypie.service.chattypie.chatroom.ChatroomService;
+import com.chattypie.service.chattypie.greeting.EmailContentGenerator;
+import com.chattypie.service.chattypie.greeting.EmailNotificationService;
+import com.chattypie.service.chattypie.greeting.NotificationService;
+import com.chattypie.web.ReportGenerationController;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,28 +39,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import ch.qos.logback.access.tomcat.LogbackValve;
-import com.appdirect.sdk.ConnectorSdkConfiguration;
-import com.appdirect.sdk.appmarket.DeveloperSpecificAppmarketCredentialsSupplier;
-import com.appdirect.sdk.credentials.StringBackedCredentialsSupplier;
-import com.appdirect.sdk.notification.HtmlEmailNotificationService;
-import com.chattypie.domain.ownership.verification.DomainOwnershipVerificationConfiguration;
-import com.chattypie.handler.EventHandlersConfiguration;
-import com.chattypie.service.appmarket.CompanyAccountServiceConfiguration;
-import com.chattypie.service.chattypie.chatroom.ChatroomService;
-import com.chattypie.service.chattypie.greeting.EmailContentGenerator;
-import com.chattypie.service.chattypie.greeting.EmailNotificationService;
-import com.chattypie.service.chattypie.greeting.NotificationService;
-import com.chattypie.web.ReportGenerationController;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 @Import({
 		ConnectorSdkConfiguration.class,
+		OpenIdSsoConfiguration.class,
 		EventHandlersConfiguration.class,
 		ValidationEndpointConfiguration.class,
 		CompanyAccountServiceConfiguration.class,
 		LocalizationConfiguration.class,
-		DomainOwnershipVerificationConfiguration.class
+		DomainOwnershipVerificationConfiguration.class,
+		SecurityConfiguration.class
 })
 @EnableAutoConfiguration
 public class RootConfiguration {

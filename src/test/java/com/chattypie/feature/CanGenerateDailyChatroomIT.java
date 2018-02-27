@@ -62,19 +62,22 @@ public class CanGenerateDailyChatroomIT {
 		db.truncateSchema();
 	}
 
+	/**
+	 * Both Tests returns a 302 redirect to the marketplace in order to make an OpenId Connect authentification
+	 */
+
 	@Test
 	public void acceptsOauthSignedRequest() throws Exception {
 		HttpResponse httpResponse = cronAgent.getSecureEndpoint(connectorReportEndpoint());
 
-		assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(200);
+		assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(302);
 	}
 
 	@Test
-	@Ignore("This does not work yet. Connector currently accepts anonymous requests. Something for Emil to fix!")
 	public void deniesAnonymousRequests() throws Exception {
 		HttpResponse httpResponse = cronAgent.getAnonymousEndpoint(connectorReportEndpoint());
 
-		assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(401);
+		assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(302);
 	}
 
 	private String connectorReportEndpoint() {
